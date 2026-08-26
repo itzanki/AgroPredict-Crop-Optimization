@@ -95,7 +95,7 @@ npm run dev
 
 ## Usage
 
-- Access the web application at [http://localhost:5000](http://localhost:5000).
+- Access the web application at https://agro-predict-crop-optimization.vercel.app/.
 - Input crop, region, and other required data.
 - View yield predictions and optimization recommendations.
 
