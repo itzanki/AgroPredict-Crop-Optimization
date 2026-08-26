@@ -1,4 +1,4 @@
-USE YieldData;
+USE defaultdb;
 TRUNCATE TABLE state_names;
 TRUNCATE TABLE crop_names;
 INSERT INTO state_names (state_name) VALUES ('Andhra Pradesh');
