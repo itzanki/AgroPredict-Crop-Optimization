@@ -26,3 +26,4 @@ env/
 **/dist/
 **/target/
 **/.mvn/
+mysql_data/
