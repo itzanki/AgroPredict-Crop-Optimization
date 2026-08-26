@@ -28,13 +28,21 @@ public class ServiceProvider {
     }
 
     private final RestTemplate restTemplate;
-    private final String FASTAPI_PREDICT_URL = "http://localhost:8000/predict";
-    private final String FASTAPI_RECOMMEND_URL = "http://localhost:8000/recommend";
+
+    @org.springframework.beans.factory.annotation.Value("${fastapi.url:http://localhost:8000}")
+    private String fastApiUrl;
 
     public ServiceProvider(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
+    private String getFastApiPredictUrl() {
+        return fastApiUrl + "/predict";
+    }
+
+    private String getFastApiRecommendUrl() {
+        return fastApiUrl + "/recommend";
+    }
 
     public Map<String, Object> getPrediction(String state, float area, String crop) {
         Map<String, Object> payload = Map.of(
@@ -43,9 +51,9 @@ public class ServiceProvider {
                 "crop", crop
         );
 
-        Map<String, Object> response = restTemplate.postForObject(FASTAPI_PREDICT_URL, payload, Map.class);
+        Map<String, Object> response = restTemplate.postForObject(getFastApiPredictUrl(), payload, Map.class);
         return response;
-        }
+    }
 
     public List<Map<String, Object>> getRecommendations(String state, float area) {
         Map<String, Object> payload = Map.of(
@@ -54,7 +62,7 @@ public class ServiceProvider {
         );
 
         List<Map<String, Object>> response =
-                restTemplate.postForObject(FASTAPI_RECOMMEND_URL, payload, List.class);
+                restTemplate.postForObject(getFastApiRecommendUrl(), payload, List.class);
 
         return response != null ? response : List.of();
     }

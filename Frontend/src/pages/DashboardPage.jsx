@@ -5,6 +5,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './DashboardPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+
 const DashboardPage = () => {
     const [cropInput, setCropInput] = useState('');
     const [cropResults, setCropResults] = useState([]);
@@ -28,7 +30,7 @@ const DashboardPage = () => {
 
         if (value.length > 0) {
             try {
-                const response = await axios.get(`http://localhost:8080/api/crop/search?keyword=${value}`);
+                const response = await axios.get(`${API_BASE_URL}/api/crop/search?keyword=${value}`);
                 // Assuming the backend returns an array of strings directly
                 const data = response.data.crops || response.data;
                 setCropResults(Array.isArray(data) ? data : []);
@@ -69,7 +71,7 @@ const handleYieldSubmit = async () => {
     };
 
     try {
-        const response = await axios.post('http://localhost:8080/api/predict', null, {
+        const response = await axios.post(`${API_BASE_URL}/api/predict`, null, {
             params: paramsToSend
         });
         
@@ -102,7 +104,7 @@ const handleRecommendation = async () => {
     };
 
     try {
-        const response = await axios.post('http://localhost:8080/api/recommend', null, {
+        const response = await axios.post(`${API_BASE_URL}/api/recommend`, null, {
             params: paramsToSend
         });
         

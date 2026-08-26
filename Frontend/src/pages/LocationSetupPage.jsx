@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LocationSetupPage.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+
 const LocationSetupPage = () => {
     // State for the text in the input box
     const [locationInput, setLocationInput] = useState('');
@@ -25,7 +27,7 @@ const LocationSetupPage = () => {
         if (value.length > 0) {
             try {
                 // Fetching location suggestions from the backend
-                const response = await axios.get(`http://localhost:8080/api/state/search?keyword=${value}`);
+                const response = await axios.get(`${API_BASE_URL}/api/state/search?keyword=${value}`);
                 // Ensure we handle cases where the backend might wrap results
                 const data = response.data.results || response.data; 
                 setSearchResults(Array.isArray(data) ? data : []);
